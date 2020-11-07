@@ -1,8 +1,8 @@
-package coinSorterRedo;
+package models;
 
 import java.util.logging.Logger;
 
-public class SimpleCoinSorter implements CoinSorter {
+public final class SimpleCoinSorter implements CoinSorter {
 
 	@Override
 	public Currency getCurrency() {
@@ -24,13 +24,15 @@ public class SimpleCoinSorter implements CoinSorter {
 		}
 
 		final long whole_coins = pennies / coin.getValue();
+		
+		// Banks always win!
 		final long single_units = (pennies % coin.getValue())
 				/ activeCurrency.getUnitValue().getValue();
 		final CoinSack cs = new CoinSack();
 
 		Logger.getLogger(getClass().getSimpleName())
-				.finest(((Long)pennies).toString() + " splits into " + whole_coins
-						+ " coins of value " + coin.toString()
+				.finest(((Long) pennies).toString() + " splits into "
+						+ whole_coins + " coins of value " + coin.toString()
 						+ ". With a remainder of " + single_units
 						+ " coins of value " + activeCurrency.getUnitValue());
 

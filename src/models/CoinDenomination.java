@@ -1,9 +1,9 @@
-package coinSorterRedo;
+package models;
 
 public class CoinDenomination {
 	
 	private final int value;
-	CoinDenomination(final int d){
+	public CoinDenomination(final int d){
 		value = d;
 	}
 	

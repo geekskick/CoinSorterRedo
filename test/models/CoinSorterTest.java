@@ -1,4 +1,4 @@
-package coinSorterRedo;
+package models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +20,24 @@ class SimpleCoinSorterTest {
 		}
 	}
 
+	@Test
+	void testCalculateRemainderCaseSmallestUnit2() throws CurrencyException {
+		final Currency curr = new TestingCurrency();
+		final CoinSorter uut = new SimpleCoinSorter(curr);
+		final CoinSack output = uut.calculate(12, new CoinDenomination(10));
+		assertEquals(1, output.getQtyForCoin(new CoinDenomination(10)));
+		assertEquals(1, output.getQtyForCoin(new CoinDenomination(2)));
+	}
+	
+	@Test
+	void testCalculateRemainderCaseSmallestUnit2RoundsDown() throws CurrencyException {
+		final Currency curr = new TestingCurrency();
+		final CoinSorter uut = new SimpleCoinSorter(curr);
+		final CoinSack output = uut.calculate(13, new CoinDenomination(10));
+		assertEquals(1, output.getQtyForCoin(new CoinDenomination(10)));
+		assertEquals(1, output.getQtyForCoin(new CoinDenomination(2)));
+	}
+	
 	@Test
 	void testCalculateRemainderCase() throws CurrencyException {
 		final Currency gbp = new Sterling();

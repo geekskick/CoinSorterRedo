@@ -1,4 +1,4 @@
-package coinSorterRedo;
+package models;
 
 public interface CoinSorter {
 	Currency getCurrency();
