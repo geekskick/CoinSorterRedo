@@ -14,10 +14,10 @@ class CoinSackTest {
 		uut.addCoin(new CoinDenomination(22), 33);
 		assertEquals(uut.getSack().size(), 1);
 		assertTrue(uut.getSack().containsKey(new CoinDenomination(22)));
-		assertEquals(uut.getSack().get(new CoinDenomination(22)), 33);
+		assertEquals(uut.getSack().get(new CoinDenomination(22)), Long.valueOf(33));
 		
-		assertEquals(uut.getQtyForCoin(new CoinDenomination(22)), 33);
-		assertEquals(uut.getQtyForCoin(new CoinDenomination(100)), 0);
+		assertEquals(uut.getQtyForCoin(new CoinDenomination(22)), Long.valueOf(33));
+		assertEquals(uut.getQtyForCoin(new CoinDenomination(100)), Long.valueOf(0));
 		
 	}
 

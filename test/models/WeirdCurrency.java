@@ -2,7 +2,7 @@ package models;
 
 import java.util.Arrays;
 
-public class TestingCurrency implements Currency {
+public class WeirdCurrency implements Currency {
 
 	final static CoinDenomination COIN_VALUES[] = {
 			new CoinDenomination(2),

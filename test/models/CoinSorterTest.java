@@ -11,31 +11,31 @@ class SimpleCoinSorterTest {
 		final Currency gbp = new Sterling();
 		final CoinSorter uut = new SimpleCoinSorter(gbp);
 		final CoinSack output = uut.calculate(1000, new CoinDenomination(200));
-		assertEquals(5, output.getQtyForCoin(new CoinDenomination(200)));
+		assertEquals(Long.valueOf(5), output.getQtyForCoin(new CoinDenomination(200)));
 
 		for (CoinDenomination coin : gbp.getCoinDenominations()) {
 			if (coin.getValue() != 200) {
-				assertEquals(0, output.getQtyForCoin(coin));
+				assertEquals(Long.valueOf(0), output.getQtyForCoin(coin));
 			}
 		}
 	}
 
 	@Test
 	void testCalculateRemainderCaseSmallestUnit2() throws CurrencyException {
-		final Currency curr = new TestingCurrency();
+		final Currency curr = new WeirdCurrency();
 		final CoinSorter uut = new SimpleCoinSorter(curr);
 		final CoinSack output = uut.calculate(12, new CoinDenomination(10));
-		assertEquals(1, output.getQtyForCoin(new CoinDenomination(10)));
-		assertEquals(1, output.getQtyForCoin(new CoinDenomination(2)));
+		assertEquals(Long.valueOf(1), output.getQtyForCoin(new CoinDenomination(10)));
+		assertEquals(Long.valueOf(1), output.getQtyForCoin(new CoinDenomination(2)));
 	}
 	
 	@Test
 	void testCalculateRemainderCaseSmallestUnit2RoundsDown() throws CurrencyException {
-		final Currency curr = new TestingCurrency();
+		final Currency curr = new WeirdCurrency();
 		final CoinSorter uut = new SimpleCoinSorter(curr);
 		final CoinSack output = uut.calculate(13, new CoinDenomination(10));
-		assertEquals(1, output.getQtyForCoin(new CoinDenomination(10)));
-		assertEquals(1, output.getQtyForCoin(new CoinDenomination(2)));
+		assertEquals(Long.valueOf(1), output.getQtyForCoin(new CoinDenomination(10)));
+		assertEquals(Long.valueOf(1), output.getQtyForCoin(new CoinDenomination(2)));
 	}
 	
 	@Test
@@ -43,12 +43,12 @@ class SimpleCoinSorterTest {
 		final Currency gbp = new Sterling();
 		final CoinSorter uut = new SimpleCoinSorter(gbp);
 		final CoinSack output = uut.calculate(1199, new CoinDenomination(200));
-		assertEquals(5, output.getQtyForCoin(new CoinDenomination(200)));
-		assertEquals(199, output.getQtyForCoin(new CoinDenomination(1)));
+		assertEquals(Long.valueOf(5), output.getQtyForCoin(new CoinDenomination(200)));
+		assertEquals(Long.valueOf(199), output.getQtyForCoin(new CoinDenomination(1)));
 
 		for (CoinDenomination coin : gbp.getCoinDenominations()) {
 			if (coin.getValue() != 200 && coin.getValue() != 1) {
-				assertEquals(0, output.getQtyForCoin(coin));
+				assertEquals(Long.valueOf(0), output.getQtyForCoin(coin));
 			}
 		}
 	}
