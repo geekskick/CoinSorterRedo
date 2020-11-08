@@ -1,8 +1,9 @@
 package models;
 
-public class CoinDenomination {
+public class CoinDenomination implements Comparable<CoinDenomination> {
 	
 	private final int value;
+	
 	public CoinDenomination(final int d){
 		value = d;
 	}
@@ -33,6 +34,14 @@ public class CoinDenomination {
 	@Override
 	public int hashCode() {
 		return value;
+	}
+
+	@Override
+	public int compareTo(CoinDenomination o) {
+		// < 0 if this < o
+		// 0 if this == o
+		// > 0 if this > o
+		return o.getValue() > value ? 1 : o.getValue() == value? 0 : -1;
 	}
 	
 }

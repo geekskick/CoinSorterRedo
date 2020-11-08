@@ -2,25 +2,19 @@ package models;
 
 import java.util.logging.Logger;
 
-public final class SimpleCoinSorter implements CoinSorter {
+import exceptions.InvalidDenominationException;
+import exceptions.OutOfRangeException;
 
-	@Override
-	public Currency getCurrency() {
-		return activeCurrency;
-	}
-
-	@Override
-	public void setCurrency(Currency currency) {
-		activeCurrency = currency;
-	}
+public final class SimpleCoinSorter extends CoinSorter {
 
 	@Override
 	public CoinSack calculate(final long pennies, final CoinDenomination coin)
-			throws CurrencyException {
+			throws InvalidDenominationException, OutOfRangeException {
 		if (!activeCurrency.isValidCoin(coin)) {
-			throw new CurrencyException(
-					coin.toString() + " is not a valid coin value in "
-							+ activeCurrency.toString());
+			throw new InvalidDenominationException();
+		}
+		if(pennies < lower_limit || pennies > upper_limit) {
+			throw new OutOfRangeException();
 		}
 
 		final long whole_coins = pennies / coin.getValue();
@@ -41,10 +35,8 @@ public final class SimpleCoinSorter implements CoinSorter {
 		return cs;
 	}
 
-	SimpleCoinSorter(final Currency currency) {
-		activeCurrency = currency;
+	public SimpleCoinSorter(final Currency currency) {
+		super(currency);
 	}
-
-	private Currency activeCurrency;
 
 }

@@ -25,5 +25,12 @@ class CoinDenominationTest {
 		assertEquals(uut, luut);
 		assertNotEquals(uut, ruut);
 	}
+	
+	@Test
+	void testCompares() {
+		assertEquals(0, new CoinDenomination(4).compareTo(new CoinDenomination(4)));
+		assertEquals(-1, new CoinDenomination(5).compareTo(new CoinDenomination(4)));
+		assertEquals(1, new CoinDenomination(4).compareTo(new CoinDenomination(5)));
+	}
 
 }

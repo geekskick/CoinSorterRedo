@@ -58,11 +58,16 @@ class SterlingTest {
 	@Test
 	void testToString() {
 		Sterling uut = new Sterling();
-		assertEquals("Sterling", uut.toString());
+		assertEquals("GBP, with denominations: 1, 2, 5, 10, 20, 50, 100, 200", uut.toString());
 	}
 
 	@Test
 	void testEquals() {
 		assertEquals(new Sterling(), new Sterling());
+	}
+	
+	@Test
+	void testCode() {
+		assertEquals(new Sterling().getCode(), "GBP");
 	}
 }
