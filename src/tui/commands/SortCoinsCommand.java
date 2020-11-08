@@ -3,12 +3,12 @@ package tui.commands;
 import java.util.Map;
 import java.util.Scanner;
 
+import exceptions.EndAppException;
 import exceptions.InvalidDenominationException;
 import exceptions.OutOfRangeException;
 import models.CoinDenomination;
 import models.CoinSack;
 import models.CoinSorter;
-import tui.EndAppException;
 
 public class SortCoinsCommand implements Command {
 

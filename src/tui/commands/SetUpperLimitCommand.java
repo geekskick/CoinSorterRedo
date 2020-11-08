@@ -2,8 +2,8 @@ package tui.commands;
 
 import java.util.Scanner;
 
+import exceptions.EndAppException;
 import models.CoinSorter;
-import tui.EndAppException;
 
 public class SetUpperLimitCommand implements Command {
 

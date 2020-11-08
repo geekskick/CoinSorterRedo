@@ -11,6 +11,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import creators.CurrencyFactory;
+import exceptions.EndAppException;
 import models.CoinSorter;
 import models.SimpleCoinSorter;
 import tui.commands.ConfigurationSubMenuCommand;

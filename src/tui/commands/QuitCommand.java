@@ -1,6 +1,6 @@
 package tui.commands;
+import exceptions.EndAppException;
 import models.CoinSorter;
-import tui.EndAppException;
 
 public final class QuitCommand implements Command{
 

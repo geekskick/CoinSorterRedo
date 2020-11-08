@@ -1,4 +1,4 @@
-package tui;
+package exceptions;
 
 public class EndAppException extends Exception {
 

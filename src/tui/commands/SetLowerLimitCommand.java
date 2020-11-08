@@ -2,9 +2,9 @@ package tui.commands;
 
 import java.util.Scanner;
 
+import exceptions.EndAppException;
 import exceptions.OutOfRangeException;
 import models.CoinSorter;
-import tui.EndAppException;
 
 public class SetLowerLimitCommand implements Command {
 

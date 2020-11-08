@@ -1,7 +1,7 @@
 package tui.commands;
 
+import exceptions.EndAppException;
 import models.CoinSorter;
-import tui.EndAppException;
 
 public class ShowCurrencyCommand implements Command {
 
