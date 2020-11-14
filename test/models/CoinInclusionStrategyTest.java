@@ -50,11 +50,6 @@ class CoinInclusionStrategyTest {
 		assertEquals(Long.valueOf(199),
 				output.getQtyForCoin(new CoinDenomination(1)));
 
-		for (CoinDenomination coin : curr.getCoinDenominations()) {
-			if (coin.getValue() != 200 && coin.getValue() != 1) {
-				assertEquals(Long.valueOf(0), output.getQtyForCoin(coin));
-			}
-		}
 	}
 
 	@Test
@@ -69,5 +64,10 @@ class CoinInclusionStrategyTest {
 		assertEquals(Long.valueOf(1),
 				output.getQtyForCoin(new CoinDenomination(200)));
 
+	}
+	
+	@Test
+	void testName() {
+		assertEquals("Inclusion", new CoinInclusionStrategy().toString());
 	}
 }

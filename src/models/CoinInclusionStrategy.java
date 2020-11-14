@@ -26,5 +26,10 @@ public final class CoinInclusionStrategy implements SortingStrategy {
 		}
 		return cs;
 	}
+	
+	@Override
+	public String toString() {
+		return "Inclusion";
+	}
 
 }

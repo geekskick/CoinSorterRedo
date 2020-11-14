@@ -131,5 +131,14 @@ class SimpleCoinSorterTest {
 			fail("Wrong Exception");
 		}
 	}
+	
+	@Test
+	void testGetStrategy() {
+		final SortingStrategy strat = new MockSortingStrategy();
+		final Currency gbp = new WeirdCurrency();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
+		assertTrue(uut.getSortingStrategy() == strat);
+	}
 
 }

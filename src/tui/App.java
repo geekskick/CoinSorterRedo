@@ -8,23 +8,24 @@ import models.CoinSorter;
 import models.CoinInclusionStrategy;
 import tui.commands.ConfigurationSubMenuCommand;
 import tui.commands.DetailsSubMenuCommand;
-import tui.commands.SortCoinsCommand;
+import tui.commands.InclusiveSortCommand;
 
 public class App {
 
 	public static void main(String[] args) {
 
-		LogManager.getLogger(LogManager.ROOT_LOGGER_NAME).trace("Starting main");
+		LogManager.getRootLogger().trace("Starting main");
 		
 		final CoinSorter sorter = new CoinSorter(
 				CurrencyFactory.getCurrency("GBP"),
 				new CoinInclusionStrategy());
+		
 		final Menu menu = new Menu("Main Menu");
 
 		try {
 			while (true) {
 				final MenuChoice options[] = {
-						new MenuChoice("Coin Sort", new SortCoinsCommand()),
+						new MenuChoice("Coin Sort", new InclusiveSortCommand()),
 						new MenuChoice("see details",
 								new DetailsSubMenuCommand()),
 						new MenuChoice("configure",

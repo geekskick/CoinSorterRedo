@@ -10,6 +10,10 @@ public class CoinSorter {
 	private int lowerLimit;
 	private int upperLimit;
 	private SortingStrategy sortingStrategy;
+	
+	public SortingStrategy getSortingStrategy() {
+		return sortingStrategy;
+	}
 
 	public Currency getCurrency() {
 		return activeCurrency;
