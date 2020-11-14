@@ -26,6 +26,7 @@ public class App {
 			while (true) {
 				final MenuChoice options[] = {
 						new MenuChoice("Coin Sort", new InclusiveSortCommand()),
+						new MenuChoice("Multi Coin Sort", new MultiSortCommand()),
 						new MenuChoice("see details",
 								new DetailsSubMenuCommand()),
 						new MenuChoice("configure",
