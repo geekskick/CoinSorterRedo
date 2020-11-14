@@ -13,7 +13,15 @@ public class SetLowerLimitCommand implements Command {
 		System.out.print("Enter a new lower limit\n>\t");
 		@SuppressWarnings("resource")
 		final Scanner stdin = new Scanner(System.in);
-		final int c = stdin.nextInt();
+		
+		final int c;
+		try {
+			c = stdin.nextInt();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
 		
 		try {
 			coinsorter.setLowerLimit(c);

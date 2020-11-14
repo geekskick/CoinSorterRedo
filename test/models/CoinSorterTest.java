@@ -4,74 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import creators.CurrencyFactory;
 import exceptions.InvalidDenominationException;
 import exceptions.OutOfRangeException;
 
 class SimpleCoinSorterTest {
 
 	@Test
-	void testCalculateSimpleCase()
-			throws InvalidDenominationException, OutOfRangeException {
-		final CoinSorter uut = new SimpleCoinSorter(
-				CurrencyFactory.getCurrency("GBP"));
-		final CoinSack output = uut.calculate(1000, new CoinDenomination(200));
-		assertEquals(Long.valueOf(5),
-				output.getQtyForCoin(new CoinDenomination(200)));
-
-		for (CoinDenomination coin : uut.getCurrency().getCoinDenominations()) {
-			if (coin.getValue() != 200) {
-				assertEquals(Long.valueOf(0), output.getQtyForCoin(coin));
-			}
-		}
-	}
-
-	@Test
-	void testCalculateRemainderCaseSmallestUnit2()
-			throws InvalidDenominationException, OutOfRangeException {
-		final Currency curr = new WeirdCurrency();
-		final CoinSorter uut = new SimpleCoinSorter(curr);
-		final CoinSack output = uut.calculate(12, new CoinDenomination(10));
-		assertEquals(Long.valueOf(1),
-				output.getQtyForCoin(new CoinDenomination(10)));
-		assertEquals(Long.valueOf(1),
-				output.getQtyForCoin(new CoinDenomination(2)));
-	}
-
-	@Test
-	void testCalculateRemainderCaseSmallestUnit2RoundsDown()
-			throws InvalidDenominationException, OutOfRangeException {
-		final Currency curr = new WeirdCurrency();
-		final CoinSorter uut = new SimpleCoinSorter(curr);
-		final CoinSack output = uut.calculate(13, new CoinDenomination(10));
-		assertEquals(Long.valueOf(1),
-				output.getQtyForCoin(new CoinDenomination(10)));
-		assertEquals(Long.valueOf(1),
-				output.getQtyForCoin(new CoinDenomination(2)));
-	}
-
-	@Test
-	void testCalculateRemainderCase()
-			throws InvalidDenominationException, OutOfRangeException {
-		final CoinSorter uut = new SimpleCoinSorter(
-				CurrencyFactory.getCurrency("GBP"));
-		final CoinSack output = uut.calculate(1199, new CoinDenomination(200));
-		assertEquals(Long.valueOf(5),
-				output.getQtyForCoin(new CoinDenomination(200)));
-		assertEquals(Long.valueOf(199),
-				output.getQtyForCoin(new CoinDenomination(1)));
-
-		for (CoinDenomination coin : uut.getCurrency().getCoinDenominations()) {
-			if (coin.getValue() != 200 && coin.getValue() != 1) {
-				assertEquals(Long.valueOf(0), output.getQtyForCoin(coin));
-			}
-		}
-	}
-
-	@Test
 	void testCalculateInvalidDenomination() {
 		final Currency gbp = new Sterling();
-		final CoinSorter uut = new SimpleCoinSorter(gbp);
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
 		try {
 			uut.calculate(1000, new CoinDenomination(3));
 			fail("Nothing thrown");
@@ -85,22 +28,28 @@ class SimpleCoinSorterTest {
 	@Test
 	void testCurrencyGet() {
 		final Currency gbp = new Sterling();
-		final CoinSorter uut = new SimpleCoinSorter(gbp);
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
 		assertEquals(new Sterling(), uut.getCurrency());
 	}
 
 	@Test
 	void testInitialRange() {
-		final CoinSorter uut = new SimpleCoinSorter(
-				CurrencyFactory.getCurrency("GBP"));
+		final Currency gbp = new Sterling();
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
 		assertEquals(1, uut.getLowerLimit());
 		assertEquals(10000, uut.getUpperLimit());
 	}
 
 	@Test
 	void testOORCalculation() {
-		final CoinSorter uut = new SimpleCoinSorter(
-				CurrencyFactory.getCurrency("GBP"));
+		final Currency gbp = new Sterling();
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
 		try {
 			uut.calculate(0, new CoinDenomination(1));
 			fail("Expected Exception");
@@ -112,8 +61,10 @@ class SimpleCoinSorterTest {
 
 	@Test
 	void testLimitSetting() throws OutOfRangeException {
-		final CoinSorter uut = new SimpleCoinSorter(
-				CurrencyFactory.getCurrency("GBP"));
+		final Currency gbp = new Sterling();
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+		
 		uut.setLowerLimit(4);
 		assertEquals(4, uut.getLowerLimit());
 		uut.setUpperLimit(400);
@@ -123,7 +74,61 @@ class SimpleCoinSorterTest {
 			uut.setLowerLimit(400000);
 			fail("Expected exception");
 		} catch (OutOfRangeException e) {
+		}
+		try {
+			uut.setUpperLimit(1);
+			fail("Expected exception");
+		} catch (OutOfRangeException e) {
 
+		}
+	}
+
+	@Test
+	void testLimitCalculation() {
+		final Currency gbp = new Sterling();
+		final SortingStrategy strat = new MockSortingStrategy();
+		final CoinSorter uut = new CoinSorter(gbp, strat);
+
+		try {
+			uut.calculate(-1, new CoinDenomination(2));
+			fail("Expected exception");
+		} catch (OutOfRangeException e) {
+
+		} catch (InvalidDenominationException e) {
+			fail("Wrong Exception");
+		}
+		
+		try {
+			uut.calculate(0, new CoinDenomination(2));
+			fail("Expected exception");
+		} catch (OutOfRangeException e) {
+
+		} catch (InvalidDenominationException e) {
+			fail("Wrong Exception");	
+		}	
+		
+		try {
+			uut.calculate(1, new CoinDenomination(2));
+		} catch (OutOfRangeException e) {
+			fail("Expected no exception");
+		} catch (InvalidDenominationException e) {
+			fail("Wrong Exception");
+		}
+		
+		try {
+			uut.calculate(10000, new CoinDenomination(2));
+		} catch (OutOfRangeException e) {
+			fail("Expected no exception");
+		} catch (InvalidDenominationException e) {
+			fail("Wrong Exception");
+		}
+		
+		try {
+			uut.calculate(10001, new CoinDenomination(2));
+			fail("Expected exception");
+		} catch (OutOfRangeException e) {
+		} catch (InvalidDenominationException e) {
+			fail("Wrong Exception");
 		}
 	}
 

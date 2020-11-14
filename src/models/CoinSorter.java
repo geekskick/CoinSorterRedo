@@ -3,10 +3,13 @@ package models;
 import exceptions.InvalidDenominationException;
 import exceptions.OutOfRangeException;
 
-public abstract class CoinSorter {
-	protected Currency activeCurrency;
-	protected int lower_limit;
-	protected int upper_limit;
+import org.apache.logging.log4j.*;
+
+public class CoinSorter {
+	private Currency activeCurrency;
+	private int lowerLimit;
+	private int upperLimit;
+	private SortingStrategy sortingStrategy;
 
 	public Currency getCurrency() {
 		return activeCurrency;
@@ -16,32 +19,66 @@ public abstract class CoinSorter {
 		activeCurrency = currency;
 	}
 
-	public abstract CoinSack calculate(final long pennies,
-			final CoinDenomination coin_denomination) throws InvalidDenominationException, OutOfRangeException;
+	public CoinSack calculate(final int pennies, final CoinDenomination coin) throws InvalidDenominationException, OutOfRangeException {
+		if(!activeCurrency.isValidCoin(coin)) {
+			LogManager.getRootLogger().trace(coin.toString() + " isn't in the active currency " + activeCurrency.getCode());
+			throw new InvalidDenominationException();
+		}
+		
+		if(!isInRange(pennies)) {
+			LogManager.getRootLogger().trace(((Integer)pennies).toString() + " is out of the limits of the coin sorter");
+			throw new OutOfRangeException();
+		}
+		
+		return sortingStrategy.calculate(pennies, coin, activeCurrency);
+	}
+	
+	public void setSortingStrategy(SortingStrategy strat) {
+		LogManager.getRootLogger().trace("Setting new sorting strategy to " + strat.toString());			
+		sortingStrategy = strat;
+	}
 
-	protected CoinSorter(Currency curr) {
+	public CoinSorter(Currency curr, SortingStrategy strat) {
 		activeCurrency = curr;
-		lower_limit = 1;
-		upper_limit = 10000;
+		lowerLimit = 1;
+		upperLimit = 10000;
+		sortingStrategy = strat;
 	}
 
 	public int getLowerLimit() {
-		return lower_limit;
+		return lowerLimit;
 	}
 
-	public void setLowerLimit(final int lower_lim) throws OutOfRangeException{
-		if(lower_lim <= 0 || lower_lim > upper_limit) {
+	public void setLowerLimit(final int lowerLim) throws OutOfRangeException{
+		if(isTooHigh(lowerLim) || lowerLim < 0) {
+			LogManager.getRootLogger().trace(((Integer)lowerLim).toString() + " is out of range of " + ((Integer)lowerLimit).toString());
 			throw new OutOfRangeException();
 		}
-		this.lower_limit = lower_lim;
+		lowerLimit = lowerLim;
 	}
 
 	public int getUpperLimit() {
-		return upper_limit;
+		return upperLimit;
 	}
 
-	public void setUpperLimit(final int upper_lim) {
-		this.upper_limit = upper_lim;
+	public void setUpperLimit(final int upperLim) throws OutOfRangeException {
+		if(isTooLow(upperLim)) {
+			LogManager.getRootLogger().trace(((Integer)upperLim).toString() + " is out of range of " + ((Integer)upperLimit).toString());
+			throw new OutOfRangeException();
+		}
+		upperLimit = upperLim;
+	}
+	
+	private boolean isInRange(final int value) {
+		return !(isTooLow(value) || isTooHigh(value));
+	}
+	
+	private boolean isTooLow(final int value) {
+		return (value < lowerLimit) || (value <= 0);
+	}
+	
+	private boolean isTooHigh(final int value) {
+		return value > upperLimit;
 	}
 
 }
