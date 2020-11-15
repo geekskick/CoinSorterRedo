@@ -35,22 +35,21 @@ public class SortCommand implements Command {
 		try {
 			result = coinsorter.calculate(value, new CoinDenomination(coin));
 		} catch (InvalidDenominationException e) {
-			System.err.println("Must enter a valid denomination, "
-					+ ((Integer) coin).toString() + " isn't one");
+			System.err.println(
+					"Must enter a valid denomination, " + coin + " isn't one");
 			return;
 		} catch (OutOfRangeException e) {
 			System.err.println("Must enter a value in the range "
-					+ ((Integer) coinsorter.getLowerLimit()).toString()
-					+ " up to "
-					+ ((Integer) coinsorter.getUpperLimit()).toString());
+					+ coinsorter.getLowerLimit() + " up to "
+					+ coinsorter.getUpperLimit());
 			return;
 		}
 
 		final Map<CoinDenomination, Long> sackmap = result.getSack();
 		for (Map.Entry<CoinDenomination, Long> result_coin : sackmap
 				.entrySet()) {
-			System.out.println("There are " + result_coin.getValue().toString()
-					+ " coins of value " + result_coin.getKey().toString());
+			System.out.println("There are " + result_coin.getValue()
+					+ " coins of value " + result_coin.getKey());
 		}
 
 	}

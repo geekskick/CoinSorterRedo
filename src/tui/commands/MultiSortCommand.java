@@ -1,14 +1,15 @@
 package tui.commands;
 
 import exceptions.EndAppException;
+import models.CoinExclusionStrategy;
 import models.CoinSorter;
 
-public class MultiSortCommand implements Command {
+public class MultiSortCommand extends SortCommand {
 
 	@Override
 	public void perform(CoinSorter coinsorter) throws EndAppException {
 		coinsorter.setSortingStrategy(new CoinExclusionStrategy());
-		new SortCommand().perform(coinsorter);
+		super.perform(coinsorter);
 	}
 
 }

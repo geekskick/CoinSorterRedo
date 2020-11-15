@@ -10,19 +10,18 @@ public class ConfigurationSubMenuCommand implements Command {
 	@Override
 	public void perform(CoinSorter coinsorter) throws EndAppException {
 		MenuChoice details_submenu[] = new MenuChoice[] {
-			new MenuChoice("set lower limit", new SetLowerLimitCommand()),
-			new MenuChoice("set upper limit", new SetUpperLimitCommand()),
-			new MenuChoice("go back", new QuitCommand())
-		};
-		
+				new MenuChoice("set lower limit", new SetLowerLimitCommand()),
+				new MenuChoice("set upper limit", new SetUpperLimitCommand()),
+				new MenuChoice("go back", new QuitCommand()) };
+
 		final Menu menu = new Menu("Configuration Submenu");
-		
+
 		try {
-			while(true) {
+			while (true) {
 				menu.getCommand(details_submenu).perform(coinsorter);
 			}
-		} catch(EndAppException e) {
-			
+		} catch (EndAppException e) {
+
 		}
 
 	}

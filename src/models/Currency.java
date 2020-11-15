@@ -2,6 +2,7 @@ package models;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Currency {
@@ -10,24 +11,27 @@ public abstract class Currency {
 	public String toString() {
 		String rc = new String();
 		rc += getCode() + ", with denominations: ";
-		rc += Arrays.stream(denominations).map(CoinDenomination::toString).collect(Collectors.joining(", "));
+		rc += denominations.stream().map(CoinDenomination::toString)
+				.collect(Collectors.joining(", "));
 		return rc;
 	}
-	
+
 	public CoinDenomination getUnitValue() {
-		return Arrays.stream(denominations).min(Comparator.comparing(CoinDenomination::getValue)).orElseThrow();
+		return denominations.stream()
+				.min(Comparator.comparing(CoinDenomination::getValue))
+				.orElseThrow();
 	}
 
-	public CoinDenomination[] getCoinDenominations() {
+	public List<CoinDenomination> getCoinDenominations() {
 		return denominations;
 	}
 
 	public Boolean isValidCoinValue(int value) {
-		return Arrays.stream(denominations).anyMatch(x -> x.getValue() == value);
+		return denominations.stream().anyMatch(x -> x.getValue() == value);
 	}
 
 	public Boolean isValidCoin(CoinDenomination coin) {
-		return Arrays.stream(denominations).anyMatch(x -> x.equals(coin));
+		return denominations.stream().anyMatch(x -> x.equals(coin));
 	}
 
 	public String getCode() {
@@ -36,7 +40,7 @@ public abstract class Currency {
 
 	protected String code;
 
-	protected CoinDenomination denominations[];
+	protected List<CoinDenomination> denominations;
 
 	@Override
 	public boolean equals(final Object other) {
@@ -47,15 +51,14 @@ public abstract class Currency {
 		} else if (getClass() != other.getClass()) {
 			return false;
 		} else {
-			Currency other_currency = (Currency)other;
-			return Arrays.equals(other_currency.getCoinDenominations(),
-					denominations);
+			Currency other_currency = (Currency) other;
+			return denominations.equals(other_currency.getCoinDenominations());
 		}
 	}
-	
-	protected Currency(String code, CoinDenomination ... denoms) {
-		this.denominations = denoms;
+
+	protected Currency(String code, CoinDenomination... denoms) {
+		this.denominations = Arrays.asList(denoms);
 		this.code = code;
 	}
-	
+
 }

@@ -2,7 +2,9 @@ package models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +13,14 @@ class SterlingTest {
 	@Test
 	void testGetCoinDenominations() {
 
-		final CoinDenomination expected[] = { new CoinDenomination(1),
+		final List<CoinDenomination> expected = new ArrayList<CoinDenomination>(Arrays.asList( new CoinDenomination(1),
 				new CoinDenomination(2), new CoinDenomination(5),
 				new CoinDenomination(10), new CoinDenomination(20),
 				new CoinDenomination(50), new CoinDenomination(100),
-				new CoinDenomination(200) };
+				new CoinDenomination(200)));
 		Sterling uut = new Sterling();
-		assertTrue(Arrays.equals(uut.getCoinDenominations(), expected));
+		
+		assertTrue(expected.equals(uut.getCoinDenominations()));
 	}
 
 	@Test
@@ -43,7 +46,7 @@ class SterlingTest {
 				new CoinDenomination(50), new CoinDenomination(100),
 				new CoinDenomination(200) };
 		final Sterling uut = new Sterling();
-		
+
 		for (CoinDenomination coin : real_values) {
 			assertTrue(uut.isValidCoin(coin));
 		}
@@ -58,14 +61,15 @@ class SterlingTest {
 	@Test
 	void testToString() {
 		Sterling uut = new Sterling();
-		assertEquals("GBP, with denominations: 1, 2, 5, 10, 20, 50, 100, 200", uut.toString());
+		assertEquals("GBP, with denominations: 1, 2, 5, 10, 20, 50, 100, 200",
+				uut.toString());
 	}
 
 	@Test
 	void testEquals() {
 		assertEquals(new Sterling(), new Sterling());
 	}
-	
+
 	@Test
 	void testCode() {
 		assertEquals(new Sterling().getCode(), "GBP");
