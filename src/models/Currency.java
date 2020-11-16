@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Currency {
+public class Currency {
 
 	@Override
 	public String toString() {
@@ -60,7 +60,7 @@ public abstract class Currency {
 		}
 	}
 
-	protected Currency(String code, String uSuffix,
+	public Currency(String code, String uSuffix,
 			CoinDenomination... denoms) {
 		this.denominations = Arrays.asList(denoms);
 		this.code = code;

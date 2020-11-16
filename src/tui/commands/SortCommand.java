@@ -15,14 +15,16 @@ public class SortCommand implements Command {
 	public void perform(CoinSorter coinsorter) throws EndAppException {
 
 		final int value = UserInput
-				.promptForInt("Enter the value of the coins you have:");
+				.promptForInt("Enter the value of the coins you have (in "
+						+ coinsorter.getCurrency().getUnitSuffix() + "):");
 
 		String coinPrompt = "Select a coin to sort with using the "
 				+ coinsorter.getSortingStrategy().toString().toLowerCase()
-				+ " strategy:";
+				+ " strategy (without the currency suffix):";
 		for (CoinDenomination coin : coinsorter.getCurrency()
 				.getCoinDenominations()) {
-			coinPrompt += "\n\t- " + coin.toString();
+			coinPrompt += "\n\t- " + coin.toString()
+					+ coinsorter.getCurrency().getUnitSuffix();
 
 		}
 
@@ -41,12 +43,15 @@ public class SortCommand implements Command {
 			return;
 		}
 
+		System.out.print("There are ");
 		final Map<CoinDenomination, Integer> sackmap = result.getSack();
 		for (Map.Entry<CoinDenomination, Integer> result_coin : sackmap
 				.entrySet()) {
-			System.out.println("There are " + result_coin.getValue()
-					+ " coins of value " + result_coin.getKey());
+			System.out.print(result_coin.getValue() + " x "
+					+ result_coin.getKey()
+					+ coinsorter.getCurrency().getUnitSuffix() + " coins, ");
 		}
+		System.out.println("and no remainder");
 
 	}
 

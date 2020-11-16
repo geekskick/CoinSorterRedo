@@ -14,7 +14,7 @@ public class UserInput {
 		Integer candidate = null;
 
 		while (candidate == null) {
-			System.out.print(message + "\n>\t");
+			prompt(message);
 			if (stdin.hasNextInt()) {
 				candidate = stdin.nextInt();
 				break;
@@ -29,5 +29,16 @@ public class UserInput {
 		}
 
 		return candidate;
+	}
+
+	public static String promptForString(String message) {
+		prompt(message);
+		@SuppressWarnings("resource")
+		Scanner stdin = new Scanner(System.in);
+		return stdin.next();
+	}
+
+	private static void prompt(String message) {
+		System.out.print(message + "\n>\t");
 	}
 }

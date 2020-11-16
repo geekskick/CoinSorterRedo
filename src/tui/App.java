@@ -22,6 +22,7 @@ public class App {
 
 		final Menu menu = new Menu("Main Menu");
 
+		// Not sure this way of exitting the menus is abuse of exceptions
 		try {
 			while (true) {
 				final MenuChoice options[] = {
@@ -38,8 +39,11 @@ public class App {
 				menu.getCommand(options).perform(sorter);
 			}
 		} catch (EndAppException e) {
+			System.out.println("Goodbye");
 			// End of app, do nothing
 		}
+
+		System.gc();
 
 	}
 

@@ -1,6 +1,8 @@
 package creators;
 
 import java.util.HashMap;
+import java.util.Set;
+
 import models.Currency;
 import models.Sterling;
 
@@ -18,5 +20,9 @@ public class CurrencyFactory {
 
 	public static void addCurrency(String code, Currency curr) {
 		allCurrencies.put(code, curr);
+	}
+	
+	public static Set<String> availableCurrencies(){
+		return allCurrencies.keySet();
 	}
 }
