@@ -38,8 +38,12 @@ public abstract class Currency {
 		return code;
 	}
 
-	protected String code;
+	public String getUnitSuffix() {
+		return uSuffix;
+	}
 
+	protected String code;
+	protected String uSuffix;
 	protected List<CoinDenomination> denominations;
 
 	@Override
@@ -56,9 +60,11 @@ public abstract class Currency {
 		}
 	}
 
-	protected Currency(String code, CoinDenomination... denoms) {
+	protected Currency(String code, String uSuffix,
+			CoinDenomination... denoms) {
 		this.denominations = Arrays.asList(denoms);
 		this.code = code;
+		this.uSuffix = uSuffix;
 	}
 
 }

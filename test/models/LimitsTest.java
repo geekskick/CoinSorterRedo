@@ -91,6 +91,6 @@ class LimitsTest {
 	@Test
 	void testString() throws OutOfRangeException {
 		final Limits uut = new Limits(1,1000);
-		assertTrue(uut.toString().equals("[1, 1000]"));
+		assertEquals(uut.toString(), "[1, 1000]");
 	}
 }

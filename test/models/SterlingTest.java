@@ -74,4 +74,9 @@ class SterlingTest {
 	void testCode() {
 		assertEquals(new Sterling().getCode(), "GBP");
 	}
+	
+	@Test
+	void testSuffix() {
+		assertEquals(new Sterling().getUnitSuffix(), "p");
+	}
 }
