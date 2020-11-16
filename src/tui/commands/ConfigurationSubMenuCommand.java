@@ -12,7 +12,7 @@ public class ConfigurationSubMenuCommand implements Command {
 		MenuChoice details_submenu[] = new MenuChoice[] {
 				new MenuChoice("set lower limit", new SetLowerLimitCommand()),
 				new MenuChoice("set upper limit", new SetUpperLimitCommand()),
-				new MenuChoice("go back", new QuitCommand()) };
+				MenuChoice.BACK };
 
 		final Menu menu = new Menu("Configuration Submenu");
 

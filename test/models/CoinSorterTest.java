@@ -10,7 +10,7 @@ import exceptions.OutOfRangeException;
 class SimpleCoinSorterTest {
 
 	@Test
-	void testCalculateInvalidDenomination() {
+	void testCalculateInvalidDenomination() throws OutOfRangeException {
 		final Currency gbp = new Sterling();
 		final SortingStrategy strat = new MockSortingStrategy();
 		final CoinSorter uut = new CoinSorter(gbp, strat);
@@ -26,7 +26,7 @@ class SimpleCoinSorterTest {
 	}
 
 	@Test
-	void testCurrencyGet() {
+	void testCurrencyGet() throws OutOfRangeException {
 		final Currency gbp = new Sterling();
 		final SortingStrategy strat = new MockSortingStrategy();
 		final CoinSorter uut = new CoinSorter(gbp, strat);
@@ -35,17 +35,17 @@ class SimpleCoinSorterTest {
 	}
 
 	@Test
-	void testInitialRange() {
+	void testInitialRange() throws OutOfRangeException {
 		final Currency gbp = new Sterling();
 		final SortingStrategy strat = new MockSortingStrategy();
 		final CoinSorter uut = new CoinSorter(gbp, strat);
 		
-		assertEquals(1, uut.getLowerLimit());
-		assertEquals(10000, uut.getUpperLimit());
+		assertEquals(1, uut.getLimits().getInclusiveLower());
+		assertEquals(10000, uut.getLimits().getInclusiveUpper());
 	}
 
 	@Test
-	void testOORCalculation() {
+	void testOORCalculation() throws OutOfRangeException {
 		final Currency gbp = new Sterling();
 		final SortingStrategy strat = new MockSortingStrategy();
 		final CoinSorter uut = new CoinSorter(gbp, strat);
@@ -59,32 +59,9 @@ class SimpleCoinSorterTest {
 		}
 	}
 
-	@Test
-	void testLimitSetting() throws OutOfRangeException {
-		final Currency gbp = new Sterling();
-		final SortingStrategy strat = new MockSortingStrategy();
-		final CoinSorter uut = new CoinSorter(gbp, strat);
-		
-		uut.setLowerLimit(4);
-		assertEquals(4, uut.getLowerLimit());
-		uut.setUpperLimit(400);
-		assertEquals(400, uut.getUpperLimit());
-
-		try {
-			uut.setLowerLimit(400000);
-			fail("Expected exception");
-		} catch (OutOfRangeException e) {
-		}
-		try {
-			uut.setUpperLimit(1);
-			fail("Expected exception");
-		} catch (OutOfRangeException e) {
-
-		}
-	}
 
 	@Test
-	void testLimitCalculation() {
+	void testLimitCalculation() throws OutOfRangeException {
 		final Currency gbp = new Sterling();
 		final SortingStrategy strat = new MockSortingStrategy();
 		final CoinSorter uut = new CoinSorter(gbp, strat);
@@ -133,7 +110,7 @@ class SimpleCoinSorterTest {
 	}
 	
 	@Test
-	void testGetStrategy() {
+	void testGetStrategy() throws OutOfRangeException {
 		final SortingStrategy strat = new MockSortingStrategy();
 		final Currency gbp = new WeirdCurrency();
 		final CoinSorter uut = new CoinSorter(gbp, strat);

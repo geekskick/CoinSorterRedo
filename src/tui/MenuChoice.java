@@ -13,6 +13,7 @@ public class MenuChoice {
 	}
 
 	public static final MenuChoice QUIT = new MenuChoice("quit", new QuitCommand());
+	public static final MenuChoice BACK = new MenuChoice("go back", new QuitCommand());
 
 	private final String name;
 	private final Command action;

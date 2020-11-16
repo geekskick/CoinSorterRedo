@@ -7,12 +7,21 @@ import org.apache.logging.log4j.*;
 
 public class CoinSorter {
 	private Currency activeCurrency;
-	private int lowerLimit;
-	private int upperLimit;
+	private Limits limits;
 	private SortingStrategy sortingStrategy;
+
+	public Limits getLimits() {
+		return limits;
+	}
 
 	public SortingStrategy getSortingStrategy() {
 		return sortingStrategy;
+	}
+
+	public void setSortingStrategy(SortingStrategy strat) {
+		LogManager.getRootLogger()
+				.trace("Setting new sorting strategy to " + strat);
+		sortingStrategy = strat;
 	}
 
 	public Currency getCurrency() {
@@ -32,7 +41,7 @@ public class CoinSorter {
 			throw new InvalidDenominationException();
 		}
 
-		if (!isInRange(pennies)) {
+		if (!limits.inRange(pennies)) {
 			LogManager.getRootLogger().trace(
 					pennies + " is out of the limits of the coin sorter");
 			throw new OutOfRangeException();
@@ -41,55 +50,11 @@ public class CoinSorter {
 		return sortingStrategy.calculate(pennies, coin, activeCurrency);
 	}
 
-	public void setSortingStrategy(SortingStrategy strat) {
-		LogManager.getRootLogger()
-				.trace("Setting new sorting strategy to " + strat);
-		sortingStrategy = strat;
-	}
-
-	public CoinSorter(Currency curr, SortingStrategy strat) {
+	public CoinSorter(Currency curr, SortingStrategy strat)
+			throws OutOfRangeException {
 		activeCurrency = curr;
-		lowerLimit = 1;
-		upperLimit = 10000;
+		limits = new Limits(1, 10000);
 		sortingStrategy = strat;
-	}
-
-	public int getLowerLimit() {
-		return lowerLimit;
-	}
-
-	public void setLowerLimit(final int lowerLim) throws OutOfRangeException {
-		if (isTooHigh(lowerLim) || lowerLim < 0) {
-			LogManager.getRootLogger()
-					.trace(lowerLim + " is out of range of " + lowerLimit);
-			throw new OutOfRangeException();
-		}
-		lowerLimit = lowerLim;
-	}
-
-	public int getUpperLimit() {
-		return upperLimit;
-	}
-
-	public void setUpperLimit(final int upperLim) throws OutOfRangeException {
-		if (isTooLow(upperLim)) {
-			LogManager.getRootLogger()
-					.trace(upperLim + " is out of range of " + upperLimit);
-			throw new OutOfRangeException();
-		}
-		upperLimit = upperLim;
-	}
-
-	private boolean isInRange(final int value) {
-		return !(isTooLow(value) || isTooHigh(value));
-	}
-
-	private boolean isTooLow(final int value) {
-		return (value < lowerLimit) || (value <= 0);
-	}
-
-	private boolean isTooHigh(final int value) {
-		return value > upperLimit;
 	}
 
 }

@@ -13,7 +13,7 @@ public class DetailsSubMenuCommand implements Command {
 		MenuChoice details_submenu[] = new MenuChoice[] {
 				new MenuChoice("show currency", new ShowCurrencyCommand()),
 				new MenuChoice("show limits", new ShowLimitCommand()),
-				new MenuChoice("go back", new QuitCommand()) };
+				MenuChoice.BACK };
 
 		final Menu menu = new Menu("Details Submenu");
 

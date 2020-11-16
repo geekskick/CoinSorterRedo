@@ -7,10 +7,10 @@ public final class CoinInclusionStrategy implements SortingStrategy {
 	@Override
 	public CoinSack calculate(final int pennies, final CoinDenomination coin,
 			final Currency currency) {
-		final long whole_coins = pennies / coin.getValue();
+		final int whole_coins = pennies / coin.getValue();
 
 		// Banks always win!
-		final long single_units = (pennies % coin.getValue())
+		final int single_units = (pennies % coin.getValue())
 				/ currency.getUnitValue().getValue();
 		final CoinSack cs = new CoinSack();
 

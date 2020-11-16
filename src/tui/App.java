@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 
 import creators.CurrencyFactory;
 import exceptions.EndAppException;
+import exceptions.OutOfRangeException;
 import models.CoinSorter;
-import models.CoinInclusionStrategy;
 import tui.commands.ConfigurationSubMenuCommand;
 import tui.commands.DetailsSubMenuCommand;
 import tui.commands.InclusiveSortCommand;
@@ -13,7 +13,7 @@ import tui.commands.MultiSortCommand;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws OutOfRangeException {
 
 		LogManager.getRootLogger().trace("Starting main");
 

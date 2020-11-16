@@ -15,7 +15,7 @@ class CoinSackTest {
 		assertEquals(uut.getSack().size(), 1);
 		assertTrue(uut.getSack().containsKey(new CoinDenomination(22)));
 		
-		assertEquals(uut.getQtyForCoin(new CoinDenomination(22)), Long.valueOf(33));
+		assertEquals(uut.getQtyForCoin(new CoinDenomination(22)), 33);
 		
 	}
 

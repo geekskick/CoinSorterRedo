@@ -1,35 +1,32 @@
 package tui.commands;
 
 import java.util.Map;
-import java.util.Scanner;
-
 import exceptions.EndAppException;
 import exceptions.InvalidDenominationException;
 import exceptions.OutOfRangeException;
 import models.CoinDenomination;
 import models.CoinSack;
 import models.CoinSorter;
+import tui.UserInput;
 
 public class SortCommand implements Command {
 
 	@Override
 	public void perform(CoinSorter coinsorter) throws EndAppException {
 
-		System.out.print("Enter the value of the coins you have:\n>\t");
-		@SuppressWarnings("resource")
-		Scanner stdin = new Scanner(System.in);
-		final int value = stdin.nextInt();
+		final int value = UserInput
+				.promptForInt("Enter the value of the coins you have:");
 
-		System.out.println("Select a coin to sort with using the "
+		String coinPrompt = "Select a coin to sort with using the "
 				+ coinsorter.getSortingStrategy().toString().toLowerCase()
-				+ " strategy:");
+				+ " strategy:";
 		for (CoinDenomination coin : coinsorter.getCurrency()
 				.getCoinDenominations()) {
-			System.out.println("- " + coin.toString());
+			coinPrompt += "\n\t- " + coin.toString();
 
 		}
 
-		final int coin = stdin.nextInt();
+		final int coin = UserInput.promptForInt(coinPrompt);
 		final CoinSack result;
 
 		try {
@@ -40,13 +37,12 @@ public class SortCommand implements Command {
 			return;
 		} catch (OutOfRangeException e) {
 			System.err.println("Must enter a value in the range "
-					+ coinsorter.getLowerLimit() + " up to "
-					+ coinsorter.getUpperLimit());
+					+ coinsorter.getLimits());
 			return;
 		}
 
-		final Map<CoinDenomination, Long> sackmap = result.getSack();
-		for (Map.Entry<CoinDenomination, Long> result_coin : sackmap
+		final Map<CoinDenomination, Integer> sackmap = result.getSack();
+		for (Map.Entry<CoinDenomination, Integer> result_coin : sackmap
 				.entrySet()) {
 			System.out.println("There are " + result_coin.getValue()
 					+ " coins of value " + result_coin.getKey());
