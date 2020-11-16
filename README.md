@@ -25,4 +25,4 @@ java -jar target/CoinSorterRedo-1.0.0-jar-with-dependencies.jar
 ## Run with extra logging
 ```bash
 java -jar -Dlog4j.configurationFile=log4j.xml target/CoinSorterRedo-1.0.0-jar-with-dependencies.jar
-``
+```
