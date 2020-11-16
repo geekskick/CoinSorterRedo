@@ -1,11 +1,14 @@
-package tui.commands;
+package controller.commands;
 
 import java.util.Set;
 
 import creators.CurrencyFactory;
 import exceptions.EndAppException;
 import models.CoinSorter;
-import tui.UserInput;
+import view.NewLineOutput;
+import view.UserInput;
+import view.UserOutputDecoratorFailure;
+import view.UserOutputDecoratorSuccess;
 
 public class CurrencySelectionCommand implements Command {
 
@@ -21,13 +24,15 @@ public class CurrencySelectionCommand implements Command {
 
 		final int choice = UserInput.promptForInt(prompt);
 		if (choice < 1 || choice > currencies.length) {
-			System.out.println("Out of range of the available options");
+			new UserOutputDecoratorFailure(NewLineOutput.INSTANCE)
+					.show("Out of range of the available options");
 			return;
 		}
 
 		final String code = currencies[choice - 1];
-		System.out.println(
+		new UserOutputDecoratorSuccess(NewLineOutput.INSTANCE).show(
 				"Setting " + code + " to be the active currency in the sorter");
+
 		coinsorter.setCurrency(CurrencyFactory.getCurrency(code));
 
 	}

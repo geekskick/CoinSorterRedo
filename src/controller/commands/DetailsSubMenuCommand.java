@@ -1,9 +1,9 @@
-package tui.commands;
+package controller.commands;
 
+import controller.Menu;
+import controller.MenuChoice;
 import exceptions.EndAppException;
 import models.CoinSorter;
-import tui.Menu;
-import tui.MenuChoice;
 
 public class DetailsSubMenuCommand implements Command {
 

@@ -1,7 +1,7 @@
-package tui;
+package controller;
 
-import tui.commands.Command;
-import tui.commands.QuitCommand;
+import controller.commands.Command;
+import controller.commands.QuitCommand;
 
 public class MenuChoice {
 	public String getName() {

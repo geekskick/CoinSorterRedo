@@ -1,4 +1,4 @@
-package tui.commands;
+package controller.commands;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,7 +9,9 @@ import exceptions.EndAppException;
 import models.CoinDenomination;
 import models.CoinSorter;
 import models.Currency;
-import tui.UserInput;
+import view.NewLineOutput;
+import view.UserInput;
+import view.UserOutputDecoratorSuccess;
 
 public class CurrencyConfigurationCommand implements Command {
 
@@ -47,7 +49,7 @@ public class CurrencyConfigurationCommand implements Command {
 
 		CurrencyFactory.addCurrency(code, c);
 
-		System.out.println(
+		new UserOutputDecoratorSuccess(NewLineOutput.INSTANCE).show(
 				"Added new currency " + code + " to the available currencies");
 
 	}

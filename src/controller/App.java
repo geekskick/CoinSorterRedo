@@ -1,15 +1,15 @@
-package tui;
+package controller;
 
 import org.apache.logging.log4j.LogManager;
 
+import controller.commands.ConfigurationSubMenuCommand;
+import controller.commands.DetailsSubMenuCommand;
+import controller.commands.InclusiveSortCommand;
+import controller.commands.MultiSortCommand;
 import creators.CurrencyFactory;
 import exceptions.EndAppException;
 import exceptions.OutOfRangeException;
 import models.CoinSorter;
-import tui.commands.ConfigurationSubMenuCommand;
-import tui.commands.DetailsSubMenuCommand;
-import tui.commands.InclusiveSortCommand;
-import tui.commands.MultiSortCommand;
 
 public class App {
 

@@ -1,4 +1,4 @@
-package tui;
+package view;
 
 import java.util.Scanner;
 
@@ -24,7 +24,8 @@ public class UserInput {
 				// Just get rid of whats there to stop an endless loop of "not a
 				// valid option"
 				stdin.next();
-				System.out.print("Not a valid option. ");
+				new UserOutputDecoratorFailure(LineOutput.INSTANCE)
+						.show("Not a valid option. ");
 			}
 		}
 
@@ -39,6 +40,6 @@ public class UserInput {
 	}
 
 	private static void prompt(String message) {
-		System.out.print(message + "\n>\t");
+		new UserOutputDecoratorPrompt(NewLineOutput.INSTANCE).show(message);
 	}
 }

@@ -34,7 +34,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>tui.App</mainClass>
+							<mainClass>controller.App</mainClass>
 						</manifest>
 						<!-- Stops a warning to do with log4j2, taken from https://github.com/svanteschubert/en16931-data-extractor/blob/master/en16931-3-reader/pom.xml#L255 -->
 						<manifestEntries>

@@ -1,4 +1,4 @@
-package tui.commands;
+package controller.commands;
 
 import exceptions.EndAppException;
 import models.CoinInclusionStrategy;

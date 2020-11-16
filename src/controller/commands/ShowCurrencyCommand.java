@@ -1,14 +1,15 @@
-package tui.commands;
+package controller.commands;
 
 import exceptions.EndAppException;
 import models.CoinSorter;
+import view.NewLineOutput;
 
 public class ShowCurrencyCommand implements Command {
 
 	@Override
 	public void perform(CoinSorter coinsorter) throws EndAppException {
-		System.out
-				.println("The active currency is " + coinsorter.getCurrency());
+		NewLineOutput.INSTANCE
+				.show("The active currency is " + coinsorter.getCurrency());
 
 	}
 
