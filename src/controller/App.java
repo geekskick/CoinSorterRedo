@@ -10,6 +10,7 @@ import creators.CurrencyFactory;
 import exceptions.EndAppException;
 import exceptions.OutOfRangeException;
 import models.CoinSorter;
+import view.NewLineOutput;
 
 public class App {
 
@@ -39,7 +40,7 @@ public class App {
 				menu.getCommand(options).perform(sorter);
 			}
 		} catch (EndAppException e) {
-			System.out.println("Goodbye");
+			NewLineOutput.INSTANCE.show("Goodbye");
 			// End of app, do nothing
 		}
 

@@ -2,7 +2,7 @@ package view;
 
 public class UserOutputDecoratorBold extends UserOutputDecorator {
 
-	protected UserOutputDecoratorBold(UserOutput wrapee) {
+	public UserOutputDecoratorBold(UserOutput wrapee) {
 		super(wrapee);
 	}
 

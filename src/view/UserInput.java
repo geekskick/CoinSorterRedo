@@ -40,6 +40,8 @@ public class UserInput {
 	}
 
 	private static void prompt(String message) {
-		new UserOutputDecoratorPrompt(NewLineOutput.INSTANCE).show(message);
+		new UserOutputDecoratorBrightWhite(
+				new UserOutputDecoratorPrompt(NewLineOutput.INSTANCE))
+						.show(message);
 	}
 }

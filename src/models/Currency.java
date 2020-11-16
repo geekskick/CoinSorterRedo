@@ -12,7 +12,8 @@ public class Currency {
 		String rc = new String();
 		rc += getCode() + ", with denominations: ";
 		rc += denominations.stream().map(CoinDenomination::toString)
-				.collect(Collectors.joining(", "));
+				.collect(Collectors.joining(getUnitSuffix() + ", "));
+		rc += getUnitSuffix();
 		return rc;
 	}
 
