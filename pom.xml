@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>CoinSorterRedo</groupId>
 	<artifactId>CoinSorterRedo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>CoinSorterRedo</name>
 	<description>Redoing a university asssignment now that I've learned more, and that I'm not constrained by university rules and requirements.</description>
 	<build>
